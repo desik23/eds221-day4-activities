@@ -1,0 +1,118 @@
+---
+title: "Loops and Functions"
+author: "Desik Somasundaram"
+date: "8/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Task 1
+```{r}
+weekdays <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+
+transects <- c("Transect A", "Transect B", "Transect C")
+
+matrix_out <- matrix(nrow = length(weekdays), ncol = length(transects))
+
+for (i in seq_along(weekdays)) {
+  for(j in seq_along(transects)) {
+    combo <- paste(weekdays[i], "-", transects[j])
+    matrix_out[i,j] = combo
+  }
+    
+}
+
+```
+
+## Task 2
+
+```{r}
+forcecalc <- function(m_kg, a_m_s2) {
+      F_N <- m_kg * a_m_s2
+      print(paste("The resulting force is", F_N, "Newtons"))
+}
+
+forcecalc(10, 2)
+
+```
+
+## Task 3
+
+```{r}
+name_column <- function(df, colnumber) {
+  if (colnumber < 1) {
+    stop("Column number is not valid")
+  }
+  name_of_col <- colnames(df[colnumber])
+  print(name_of_col)
+}
+
+name_column(mtcars, 5)
+```
+## Task 4
+
+```{r}
+
+
+sci_name <- c("Chanos chanos", "Sphyraena barracuda", "Caranx ignobilis")
+
+common_name <- c("Milkfish", "Great barracuda", "Giant trevally")
+
+a_est <- c(0.0905, 0.0181, 0.0353)
+
+b_est <- c(2.52, 3.27, 3.05)
+  
+fish_params <- data.frame(sci_name, common_name, a_est, b_est)
+
+fishweight <- function(commonname, tol_length) {
+  if (!commonname %in% fish_params$common_name) {
+    stop("Please choose either Milkfish, Great barracuda or Giant trevally")
+  }
+      index = match(commonname,fish_params$common_name)
+      W = fish_params$a_est[index] * (tol_length ^  fish_params$b_est[index])
+  return(W)
+}
+
+length_vec <- seq(from = 0, to = 100, by = 1)
+
+fishweight("Milkfish", 10)
+fishweight("Giant trevally", 10)
+#fishweight("Goldfish", 10)
+
+milkfish_weights <- fishweight("Milkfish", length_vec)
+
+milkfish_weights
+```
+## Task 5 and 6
+
+```{r}
+
+wave_power <- function(Wave_H, Wave_T, Wave_D) {
+  if (Wave_D >= 12){
+    message("Deep Wave Power equation was used")  
+    wavepower = 0.5 * (Wave_H ^ 2) * Wave_T
+  }
+  else if (Wave_D <= 12){
+    message("Shallow Wave Power equation was used")   
+    wavepower = 0.81 * (Wave_H ^ 2) * Wave_T
+  }
+  print(wavepower)
+}
+
+wave_heights <- seq(from = 0, to = 20, by = 0.2)
+
+wave_power(wave_heights, 8, 5)
+
+
+```
+# Task 6
+
+```{r}
+
+
+```
+
+
